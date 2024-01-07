@@ -5,18 +5,8 @@ const countriesContainer = document.querySelector('.countries');
 //https://countries-api-836d.onrender.com/countries/
 //https://restcountries.com/v2/name/portugal
 ////////////////////////////////////////
-const getCountryData = function(country){
-const request = new XMLHttpRequest();
 
-//request.open('GET', 'https://countries-api-836d.onrender.com/countries')
-request.open('GET', `https://restcountries.com/v2/name/${country}`)
-request.send();
-
-
-request.addEventListener('load', function(){
-    const [data] = JSON.parse(this.responseText)
-    console.log(data);
-
+const renderCountry = function(data){
     const html = `
     <article class="country">
           <img class="country__img" src="${data.flag}" />
@@ -31,6 +21,20 @@ request.addEventListener('load', function(){
     countriesContainer.insertAdjacentHTML('beforeend', html);
     countriesContainer.style.opacity = 1;
 
+}
+const getCountryData = function(country){
+const request = new XMLHttpRequest();
+
+//request.open('GET', 'https://countries-api-836d.onrender.com/countries')
+request.open('GET', `https://restcountries.com/v2/name/${country}`)
+request.send();
+
+
+request.addEventListener('load', function(){
+    const [data] = JSON.parse(this.responseText)
+    console.log(data);
+
+    
 })
 }
 
