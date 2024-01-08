@@ -19,8 +19,11 @@ const renderCountry = function(data, className = ''){
           </div>
     </article> `
     countriesContainer.insertAdjacentHTML('beforeend', html);
-    countriesContainer.style.opacity = 1;
 
+}
+
+const renderError = function(msg){
+    countriesContainer.insertAdjacentText('beforeend', msg);
 }
 // const getCountryDataAndNebo = function(country){
 // const request = new XMLHttpRequest();
@@ -76,8 +79,32 @@ const request = fetch(`https://restcountries.com/v2/name/portugal`)
 console.log(request)
 
 const getCountryData = function(country){
-    fetch(`https://restcountries.com/v2/name/${country}`).then(response => response.json())
-    .then(data => renderCountry(data[0]))
+    fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response =>{
+        if(!response.ok)
+        throw new Error (`Country not found (${response.status})Error`)
+        return response.json()
+    })
+    .then(data => {
+        renderCountry(data[0])
+        const neighbour = data[0].borders?.[0];
+
+        if(!neighbour) return;
+        return fetch(`https://restcountries.com/v2/alpha/${neighbour}`)
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+        console.log(err)
+        renderError(`something happened ${err}`)
+    })
+    .finally(()=> {
+        countriesContainer.style.opacity = 1;
+        })
+
 }
 
-getCountryData('nigeria')
+btn.addEventListener('click', function(){
+    getCountryData('nigerthhgia')
+
+})
