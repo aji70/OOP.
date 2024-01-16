@@ -85,7 +85,7 @@ const renderError = function(msg){
 // }
 const request = fetch(`https://restcountries.com/v2/name/portugal`)
 
-console.log(request)
+console.log(request)//
 
 // const getCountryData = function(country){
 //     fetch(`https://restcountries.com/v2/name/${country}`)
@@ -98,6 +98,7 @@ console.log(request)
 //         renderCountry(data[0])
 //         const neighbour = data[0].borders?.[0];
 //         // const neighbour = "ijsakj"
+
 
 //         if(!neighbour) return;
 //         return fetch(`https://restcountries.com/v2/alpha/${neighbour}`)
